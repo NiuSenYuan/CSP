@@ -1,5 +1,10 @@
+/*
+35分解法
+注意需要使用栈来储存头插和尾插的顺序
+*/
 #include <iostream>
 #include <deque>
+#include <stack>
 #include <cstring>
 #include <algorithm>
 using namespace std;
@@ -57,8 +62,9 @@ int main()
 		}
 		else
 		{
+			stack<int>stk;
 			mat res;
-			int l,r,vis=0;
+			int l,r;
 			scanf("%d%d",&l,&r);
 			for(int i=l;i<=r;i++)
 			{
@@ -69,21 +75,22 @@ int main()
 				if(zl[i][0]==1)
 				{
 					d.push_front(res);
-					vis=1;
+					stk.push(1);
 				}
 				else if(zl[i][0]==2)
 				{
 					d.push_back(res);
-					vis=2;
+					stk.push(2);
 				}
 				else
 				{
-					if(vis)
+					if(!stk.empty())
 					{
-						if(vis==1)d.pop_front();
+						int top=stk.top();
+						stk.pop();
+						if(top==1)d.pop_front();
 						else d.pop_back();
 					}
-					vis=0;
 				}
 			}
 			res.m[1][1]=res.m[2][2]=1;
